@@ -320,13 +320,13 @@ Download, Install and Configure IDM 7.1
 - Take note URL has the code
     ![](redirect-success.png)
     ```bash
-    https://www.example.com/callback?code=mlmjk9-_pgojRnjo5OrgoeAzMxs&iss=http%3A%2F%2Fam.dssdemo.com%3A8081%2Fam%2Foauth2&state=abc123&client_id=myClient
+    https://www.example.com/callback?code=6fbQu2B8eVJ0ULEopm3K11ZpZiw&iss=http%3A%2F%2Fam.dssdemo.com%3A8081%2Fam%2Foauth2&state=abc123&client_id=myClient
     ```
 - Exchange code for token
     ```bash
     $ curl --request POST \
     --data "grant_type=authorization_code" \
-    --data "code=mlmjk9-_pgojRnjo5OrgoeAzMxs" \
+    --data "code=6fbQu2B8eVJ0ULEopm3K11ZpZiw" \
     --data "client_id=myClient" \
     --data "client_secret=forgerock" \
     --data "redirect_uri=https://www.example.com:443/callback" \
