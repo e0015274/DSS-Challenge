@@ -304,6 +304,12 @@ Download, Install and Configure IDM 7.1
     "(&)" \
     1.1
     ```
+### Create User (Identities) in IDM
+Creating new user in IDm syncs to AM
+- IDM. New Users created
+![](user-list-openidm.png)
+- AM. Users synchronised from IDM.
+![](user-list-am.png)
 ### Authorization Code Grant Flow
 #### Authorization Code Grant Flow using Browser
 - In browser URL box
