@@ -37,6 +37,7 @@ The servers are configured with static IPs with the appropriate DNS records.
 | Identity Management | openidm.dssdemo.com | 100.113.141.11/27 |
 | Identity Gateway | ig.dssdemo.com | 100.113.141.12/27 |
 | Platform UIs | platform-uis.dssdemo.com | 100.113.141.13/27 |
+| Protected App Server | app.protected.net | 100.113.141.5/27 |
 | Desktop | desktop.dssdemo.com | DHCP |
 
 ### OS
@@ -268,7 +269,28 @@ $ curl \
 {"tokenId":"iu6LNlgvvBgGJGNYt1j_OaZtBM8.*AAJTSQACMDEAAlNLABxzWXRlT1R6Umc4d1A3eGxranZHNkhrcmt2c009AAR0eXBlAANDVFMAAlMxAAA.*","successUrl":"/am/console","realm":"/"}
 ```
 ## Identity Gateway
-
+### Sample Application
+- Download and Install Sample Application
+- Run Sample App
+    ```bash
+    $ java -jar IG-sample-application-7.1.0.jar
+    ```
+- Verify Connection and Login to Sample Application
+    - http://localhost:8081/home
+    - http://localhost:8081/login
+        - Username: demo
+        - Password: Ch4ng31t
+### IG (Standalone)
+- Download and Install Identity Gateway 7.1
+- Verify IG connection successful
+    - http://ig.dssdemo.com:8080
+### Protect App with IG (Standalone, Local credentials)
+Configure IG to route to Protected App (app.protected.net) when request is made to /static endpoint
+- $HOME/.openig/routes/static-resources.json
+- $HOME/.openig/routes/01-static.json
+- Verify IG able to provide credentials and log in user to the Protected App
+    - http://ig.dssdemo.com:8080/static
+        ![](ig-login.png)
 ## Identity Management
 Download, Install and Configure IDM 7.1 
 - Assign JAVA_HOME to /usr
@@ -356,4 +378,11 @@ $ curl --request POST --header "Content-Type: application/json" --header "X-Open
 ```
 ## Improvements
 - Set up HTTPS connection.
+## Improvements / TODO
+- Set up HTTPS connections
+- Configure Identity Gateway to gets credentials from Access Management server
+- Add mappings to IDM for 2-way synchronization
+- Configure Progressive Profiling on IDM
+- Integrate IDM with Social Provider
 ## Resources
+- https://backstage.forgerock.com
