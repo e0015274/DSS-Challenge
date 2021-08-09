@@ -245,6 +245,7 @@ $ opendj/bin/ldapsearch \
 # Install Access Management web app
 cp AM-7.1.0.war /opt/tomcat/latest/am.war
 ```
+- Verify successfull install by navigating on browser to http://am.dssdemo.com:8081/am
 ### Import Authentication Trees using Amster
 ```bash
 # In Amster
