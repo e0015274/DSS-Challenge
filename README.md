@@ -316,7 +316,9 @@ Download, Install and Configure IDM 7.1
     &redirect_uri=https://www.example.com:443/callback
     ```
 - Provide Credentials and Click Allow
+    ![](request-access.png)
 - Take note URL has the code
+    ![](redirect-success.png)
     ```bash
     https://www.example.com/callback?code=mlmjk9-_pgojRnjo5OrgoeAzMxs&iss=http%3A%2F%2Fam.dssdemo.com%3A8081%2Fam%2Foauth2&state=abc123&client_id=myClient
     ```
