@@ -1,3 +1,31 @@
+# Table Of Contents (TOC)
+- [DSS-Challenge](#dss-challenge)
+  * [High-level Architecture](#high-level-architecture)
+  * [Environment](#environment)
+    + [Servers](#servers)
+    + [OS](#os)
+    + [JAVA](#java)
+  * [Config Store](#config-store)
+  * [Identities Store](#identities-store)
+  * [Access Management](#access-management)
+    + [Setup the latest Apache Tomcat® application container](#setup-the-latest-apache-tomcat--application-container)
+    + [Configure Secure connection to Config and Identities Store](#configure-secure-connection-to-config-and-identities-store)
+    + [Import Authentication Trees using Amster](#import-authentication-trees-using-amster)
+    + [Configure Access Management](#configure-access-management)
+  * [Identity Gateway](#identity-gateway)
+    + [Sample Application](#sample-application)
+    + [IG (Standalone)](#ig--standalone-)
+    + [Protect App with IG (Standalone, Local credentials)](#protect-app-with-ig--standalone--local-credentials-)
+  * [Identity Management](#identity-management)
+    + [Create User (Identities) in IDM](#create-user--identities--in-idm)
+    + [Authorization Code Grant Flow](#authorization-code-grant-flow)
+      - [Authorization Code Grant Flow using Browser](#authorization-code-grant-flow-using-browser)
+      - [Authorization Code Grant Flow using credentials](#authorization-code-grant-flow-using-credentials)
+    + [Resource Owner Password Credentials Grant Flow](#resource-owner-password-credentials-grant-flow)
+    + [Client Credentials Grant Flow](#client-credentials-grant-flow)
+  * [Improvements / TODO](#improvements---todo)
+  * [Resources](#resources)
+
 # DSS-Challenge
 Mini POC of ForgeRock Platform
 
@@ -328,14 +356,14 @@ Download, Install and Configure IDM 7.1
     1.1
     ```
 ### Create User (Identities) in IDM
-Creating new user in IDm syncs to AM
+Creating new user in IDM syncs to AM
 - IDM. New Users created
 ![](user-list-openidm.png)
 - AM. Users synchronised from IDM.
 ![](user-list-am.png)
 ### Authorization Code Grant Flow
 #### Authorization Code Grant Flow using Browser
-- In browser URL box
+- Step 1: Enter the request in browser's URL input textbox
     ```bash
     http://am.dssdemo.com:8081/am/oauth2/realms/root/authorize \
     ?client_id=myClient \
@@ -344,14 +372,16 @@ Creating new user in IDm syncs to AM
     &state=abc123 \
     &redirect_uri=https://www.example.com:443/callback
     ```
-- Provide Credentials and Click Allow
+- Step 2: You will be directed to Login Page (if session not available)
+- Step 3: Provide your Credentials to login.
+- Step 4: Directed to consent page. Click Allow
     ![](request-access.png)
-- Take note URL has the code
+- Step 5: Take note URL has the code
     ![](redirect-success.png)
     ```bash
     https://www.example.com/callback?code=6fbQu2B8eVJ0ULEopm3K11ZpZiw&iss=http%3A%2F%2Fam.dssdemo.com%3A8081%2Fam%2Foauth2&state=abc123&client_id=myClient
     ```
-- Exchange code for token
+- Step 6: Exchange code for token
     ```bash
     $ curl --request POST \
     --data "grant_type=authorization_code" \
@@ -364,11 +394,31 @@ Creating new user in IDm syncs to AM
     {"access_token":"CHrpLws5HA-ItgS026eLfUQnykk","scope":"write","token_type":"Bearer","expires_in":3599}
     ```
 #### Authorization Code Grant Flow using credentials
+- Provide credentials in the POST request
 ```bash
 $ curl --request POST --header "Content-Type: application/json" --header "X-OpenAM-Username: demo" --header "X-OpenAM-Password: Ch4ng31t" --header "Accept-API-Version: resource=2.0, protocol=1.0" 'http://am.dssdemo.com:8081/am/json/realms/root/authenticate'
-# response
+# Response
 {"tokenId":"hg4Y7ziIUHul98DyVf9VHsf9cUA.*AAJTSQACMDEAAlNLABxFSWtMcGhZMW1ySzduVlR6cWFJK2JNdEdOYjA9AAR0eXBlAANDVFMAAlMxAAA.*","successUrl":"/am/console","realm":"/"}
 ```
+### Resource Owner Password Credentials Grant Flow
+- Step 1: Resource Owner provides credentials to Client that's wishing to get the access token
+- Step 2: The client sends a POST request to the authorization server's token endpoint
+     ```bash
+     # Post Request
+     curl --request POST \
+     --data "grant_type=password" \
+     --data "username=demo" \
+     --data "password=Ch4ng31t" \
+     --data "scope=write" \
+     --data "client_id=myClient" \
+     --data "client_secret=forgerock" \
+     "http://am.dssdemo.com:8081/am/oauth2/realms/root/access_token"
+     ```
+- Step 3: The client receives an access token from the authorization server
+     ```bash
+     # Response
+     {"access_token": "MxS_4eeCy1jUCgu7jhKgf5Noj-A","scope": "write","token_type": "Bearer","expires_in": 3599}
+     ```
 ### Client Credentials Grant Flow
 ```bash
 # Client Credentials Grant Flow using credentials
@@ -376,8 +426,6 @@ $ curl --request POST --header "Content-Type: application/json" --header "X-Open
 # Response
 {"tokenId":"hg4Y7ziIUHul98DyVf9VHsf9cUA.*AAJTSQACMDEAAlNLABxFSWtMcGhZMW1ySzduVlR6cWFJK2JNdEdOYjA9AAR0eXBlAANDVFMAAlMxAAA.*","successUrl":"/am/console","realm":"/"}
 ```
-## Improvements
-- Set up HTTPS connection.
 ## Improvements / TODO
 - Set up HTTPS connections
 - Configure Identity Gateway to gets credentials from Access Management server
