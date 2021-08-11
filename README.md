@@ -429,6 +429,7 @@ $ curl --request POST --header "Content-Type: application/json" --header "X-Open
 ## Improvements / TODO
 - Set up HTTPS connections
 - Configure Identity Gateway to gets credentials from Access Management server
+    - ~~Configure IG as a Policy Enforcement Point (PEP)~~ **`COMPLETED`**
 - Add mappings to IDM for 2-way synchronization
 - Configure Progressive Profiling on IDM
 - Integrate IDM with Social Provider
