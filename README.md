@@ -427,7 +427,7 @@ $ curl --request POST --header "Content-Type: application/json" --header "X-Open
 {"tokenId":"hg4Y7ziIUHul98DyVf9VHsf9cUA.*AAJTSQACMDEAAlNLABxFSWtMcGhZMW1ySzduVlR6cWFJK2JNdEdOYjA9AAR0eXBlAANDVFMAAlMxAAA.*","successUrl":"/am/console","realm":"/"}
 ```
 ## Improvements / TODO
-- Set up HTTPS connections
+- ~~Set up HTTPS connections~~ **`COMPLETED`**
 - Configure Identity Gateway to gets credentials from Access Management server
     - ~~Configure IG as a Policy Enforcement Point (PEP)~~ **`COMPLETED`**
 - Add mappings to IDM for 2-way synchronization
